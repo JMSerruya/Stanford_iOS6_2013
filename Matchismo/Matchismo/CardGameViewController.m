@@ -7,6 +7,7 @@
 //
 
 #import "CardGameViewController.h"
+#import "Card.h"
 
 @interface CardGameViewController ()
 
@@ -16,6 +17,13 @@
 
 @implementation CardGameViewController
 
+- (id)initWithCoder:(NSCoder *)decoder
+{
+    self = [super initWithCoder:decoder];
+    _deck = [[PlayingCardDeck alloc] init];
+    return self;
+}
+
 - (void)setFlipCount:(int)flipCount
 {
     _flipCount = flipCount;
@@ -23,8 +31,16 @@
 }
 
 - (IBAction)flipCard:(UIButton *)sender {
+    
+    if(sender.selected == true){
+        self.flipCount++;
+       
+        Card* card = [_deck drawRandomCard];
+        [sender setTitle:card.contents forState:UIControlStateSelected];
+    }
     sender.selected = !sender.selected;
-    self.flipCount++;
+    
+    
 }
 
 @end
